@@ -7,7 +7,7 @@ public class Server implements Runnable{
     ServerSocket serverSocket;
 
     public Server(int id) throws IOException {
-        this.port = 1000+id;
+        this.port = 10000+id;
         this.serverSocket = new ServerSocket(this.port);
     }
 
