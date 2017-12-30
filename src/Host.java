@@ -4,6 +4,19 @@ import java.io.InputStreamReader;
 
 public class Host {
     public static void main(String[] args) throws IOException {
+        int id = Integer.parseInt(args[0]);
+        if(id > 0 && id<100) {
+            System.out.println("Starting host: "+id);
+        }
+        else {
+            System.out.println("Host id must be in range: 1-99");
+            return;
+        }
+
+        Server server = new Server(id);
+        Thread serverThread = new Thread(server);
+        serverThread.start();
+
         BufferedReader userCommand = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             String command = userCommand.readLine();
