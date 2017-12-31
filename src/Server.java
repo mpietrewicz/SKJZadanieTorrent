@@ -18,7 +18,24 @@ public class Server implements Runnable{
             Socket connectionSocket = null;
             try {
                 connectionSocket = serverSocket.accept();
-                // TODO Add object Connection as Thread
+                Connection connection = new Connection(connectionSocket);
+                String requestedCommand = connection.readMessage();
+                System.out.println("Requested Command: " +requestedCommand);
+
+                switch (requestedCommand) {
+                    case "PULL":
+                        System.out.println("Mam udsotepnic plik o podanej nazwie");
+                        connection.sendMessage("Udostepnilem plik!");
+                        break;
+                    case "PUSH":
+                        System.out.println("Otrzymam plik o podanej nazwie");
+                        connection.sendMessage("Odebralem plik!");
+                        break;
+                    default:
+                        System.out.println("UNRECOGNIZED COMMAND");
+                        break;
+                }
+                connection.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

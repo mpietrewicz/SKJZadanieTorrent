@@ -43,6 +43,10 @@ public class Connection {
         return inputStreamBufferedReader.readLine();
     }
 
+    public void close() throws IOException {
+        socket.close();
+    }
+
     public static boolean isPortValid(int port) {
         if(port > portStartNumber && port<portEndNumber) {
             return true;
