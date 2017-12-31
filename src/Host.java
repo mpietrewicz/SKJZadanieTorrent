@@ -8,10 +8,8 @@ public class Host {
     public static void main(String[] args) throws IOException {
         int id = Integer.parseInt(args[0]);
         Socket clientSocket;
-        InputStreamReader inputStream;
-        BufferedReader inputStreamBufferedReader;
+        Connection connection;
         String response;
-        DataOutputStream outputStream;
 
         if(id > 0 && id<100) {
             System.out.println("Starting host: "+id);
@@ -35,12 +33,9 @@ public class Host {
                             "-  chcemy wiedzieć gdzie (na jakim hoście) jakie pliki się znajdują, wraz z ich sumami kontrolnymi MD5");
 
                     clientSocket = new Socket("127.0.0.1", 10000);
-                    outputStream = new DataOutputStream(clientSocket.getOutputStream());
-                    outputStream.writeBytes(command +'\n');
-
-                    inputStream = new InputStreamReader(clientSocket.getInputStream());
-                    inputStreamBufferedReader = new BufferedReader(inputStream);
-                    response = inputStreamBufferedReader.readLine();
+                    connection = new Connection(clientSocket);
+                    connection.sendMessage(command);
+                    response = connection.readMessage();
                     System.out.println(response);
 //                    clientSocket.close();
                     break;
@@ -48,12 +43,9 @@ public class Host {
                     System.out.println("Wymiana list udostępnianych plików między hostami " +
                             "-  chcemy udostepnic listę udostępnianych plików");
                     clientSocket = new Socket("127.0.0.1", 10000);
-                    outputStream = new DataOutputStream(clientSocket.getOutputStream());
-                    outputStream.writeBytes(command +'\n');
-
-                    inputStream = new InputStreamReader(clientSocket.getInputStream());
-                    inputStreamBufferedReader = new BufferedReader(inputStream);
-                    response = inputStreamBufferedReader.readLine();
+                    connection = new Connection(clientSocket);
+                    connection.sendMessage(command);
+                    response = connection.readMessage();
                     System.out.println(response);
 //                    clientSocket.close();
                     break;
