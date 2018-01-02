@@ -52,11 +52,8 @@ public class Host {
                     System.out.println("ściągamy z wybranego hosta plik o zadanej nazwie ");
                     System.out.print("Podaj nazwe hosta z ktorego ma być pobrany plik: ");
                     port = userCommand.readLine();
-                    System.out.println(command);
-                    connection = new Connection("127.0.0.1", port);
-                    connection.sendMessage(command);
-                    response = connection.readMessage();
-                    System.out.println(response);
+                    Thread pullRequestThread = new Thread(new PullRequest(command, port));
+                    pullRequestThread.start();
                     break;
                 case "PUSH":
                     System.out.println("wrzucamy na wybrany host pliku o zadanej nazwie");
