@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.rmi.server.ExportException;
+import java.util.concurrent.TimeUnit;
 
-public class Connection {
+public class Connection implements Runnable{
     static int portStartNumber = 10000;
     static int portEndNumber = 10100;
 
@@ -13,6 +14,8 @@ public class Connection {
     private InputStreamReader inputStream;
     private BufferedReader inputStreamBufferedReader;
     private DataOutputStream outputStream;
+
+    private String command;
 
     public Connection(Socket socket) throws IOException {
         this.socket = socket;
@@ -58,5 +61,33 @@ public class Connection {
 
     public static boolean isPortValid(String port) {
         return isPortValid(Integer.parseInt(port));
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Mam udsotepnic plik o podanej nazwie");
+        try {
+            TimeUnit.SECONDS.sleep(45);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            sendMessage("Udostepnilem plik!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

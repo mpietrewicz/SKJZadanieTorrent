@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 public class Server implements Runnable{
     int port;
@@ -22,21 +23,25 @@ public class Server implements Runnable{
                 String requestedCommand = connection.readMessage();
                 System.out.println("Requested Command: " +requestedCommand);
 
+                connection.setCommand(requestedCommand);
                 switch (requestedCommand) {
                     case "PULL":
-                        System.out.println("Mam udsotepnic plik o podanej nazwie");
-                        connection.sendMessage("Udostepnilem plik!");
+                        Thread thread = new Thread(connection);
+                        thread.start();
                         break;
                     case "PUSH":
                         System.out.println("Otrzymam plik o podanej nazwie");
+                        TimeUnit.SECONDS.sleep(45);
                         connection.sendMessage("Odebralem plik!");
                         break;
                     default:
                         System.out.println("UNRECOGNIZED COMMAND");
                         break;
                 }
-                connection.close();
+//                connection.close();
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
