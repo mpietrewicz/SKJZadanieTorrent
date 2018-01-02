@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.rmi.server.ExportException;
 import java.util.concurrent.TimeUnit;
 
-public class Connection implements Runnable{
+public class Connection {
     static int portStartNumber = 10000;
     static int portEndNumber = 10100;
 
@@ -51,7 +51,7 @@ public class Connection implements Runnable{
     }
 
     public static boolean isPortValid(int port) {
-        if(port > portStartNumber && port<portEndNumber) {
+        if(port >= portStartNumber && port<portEndNumber) {
             return true;
         }
         else {
@@ -69,25 +69,5 @@ public class Connection implements Runnable{
 
     public void setCommand(String command) {
         this.command = command;
-    }
-
-    @Override
-    public void run() {
-        System.out.println("Mam udsotepnic plik o podanej nazwie");
-        try {
-            TimeUnit.SECONDS.sleep(45);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            sendMessage("Udostepnilem plik!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

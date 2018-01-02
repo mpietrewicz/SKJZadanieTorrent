@@ -26,22 +26,18 @@ public class Server implements Runnable{
                 connection.setCommand(requestedCommand);
                 switch (requestedCommand) {
                     case "PULL":
-                        Thread thread = new Thread(connection);
-                        thread.start();
+                        Thread pullResponseThread = new Thread(new PullResponse(connection, requestedCommand));
+                        pullResponseThread.start();
                         break;
                     case "PUSH":
-                        System.out.println("Otrzymam plik o podanej nazwie");
-                        TimeUnit.SECONDS.sleep(45);
-                        connection.sendMessage("Odebralem plik!");
+                        Thread pushResponseThread = new Thread(new PushResponse(connection, requestedCommand));
+                        pushResponseThread.start();
                         break;
                     default:
                         System.out.println("UNRECOGNIZED COMMAND");
                         break;
                 }
-//                connection.close();
             } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }

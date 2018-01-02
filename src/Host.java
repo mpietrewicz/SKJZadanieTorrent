@@ -6,9 +6,7 @@ import java.net.Socket;
 public class Host {
     public static void main(String[] args) throws IOException {
         int id = Integer.parseInt(args[0]);
-        Socket clientSocket;
         Connection connection;
-        String response;
         String port;
 
         if(Connection.isPortValid(10000+id)) {
@@ -31,16 +29,14 @@ public class Host {
                 case "GET":
                     System.out.println("Wymiana list udostępnianych plików między hostami " +
                             "-  chcemy wiedzieć gdzie (na jakim hoście) jakie pliki się znajdują, wraz z ich sumami kontrolnymi MD5");
-                    connection = new Connection("127.0.0.1", 10000);
-                    port = userCommand.readLine();
+                    port = "10000";
                     Thread setRequestThread = new Thread(new SetRequest(command, port));
                     setRequestThread.start();
                     break;
                 case "SET":
                     System.out.println("Wymiana list udostępnianych plików między hostami " +
                             "-  chcemy udostepnic listę udostępnianych plików");
-                    connection = new Connection("127.0.0.1", 10000);
-                    port = userCommand.readLine();
+                    port = "10000";
                     Thread getRequestThread = new Thread(new GetRequest(command, port));
                     getRequestThread.start();
                     break;
