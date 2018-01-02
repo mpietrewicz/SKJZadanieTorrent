@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class PullRequest implements Runnable {
     String command;
@@ -18,6 +16,7 @@ public class PullRequest implements Runnable {
         connection.sendMessage(command);
         String response = connection.readMessage();
         System.out.println(response);
+        connection.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

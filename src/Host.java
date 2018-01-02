@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
@@ -32,21 +31,18 @@ public class Host {
                 case "GET":
                     System.out.println("Wymiana list udostępnianych plików między hostami " +
                             "-  chcemy wiedzieć gdzie (na jakim hoście) jakie pliki się znajdują, wraz z ich sumami kontrolnymi MD5");
-
                     connection = new Connection("127.0.0.1", 10000);
-                    connection.sendMessage(command);
-                    response = connection.readMessage();
-                    System.out.println(response);
-//                    clientSocket.close();
+                    port = userCommand.readLine();
+                    Thread setRequestThread = new Thread(new SetRequest(command, port));
+                    setRequestThread.start();
                     break;
                 case "SET":
                     System.out.println("Wymiana list udostępnianych plików między hostami " +
                             "-  chcemy udostepnic listę udostępnianych plików");
                     connection = new Connection("127.0.0.1", 10000);
-                    connection.sendMessage(command);
-                    response = connection.readMessage();
-                    System.out.println(response);
-//                    clientSocket.close();
+                    port = userCommand.readLine();
+                    Thread getRequestThread = new Thread(new GetRequest(command, port));
+                    getRequestThread.start();
                     break;
                 case "PULL":
                     System.out.println("ściągamy z wybranego hosta plik o zadanej nazwie ");
@@ -59,11 +55,8 @@ public class Host {
                     System.out.println("wrzucamy na wybrany host pliku o zadanej nazwie");
                     System.out.print("Podaj nazwe hosta do ktorego ma być wysłany plik: ");
                     port = userCommand.readLine();
-                    System.out.println(command);
-                    connection = new Connection("127.0.0.1", port);
-                    connection.sendMessage(command);
-                    response = connection.readMessage();
-                    System.out.println(response);
+                    Thread pushRequestThread = new Thread(new PushRequest(command, port));
+                    pushRequestThread.start();
                     break;
                 case "QUIT":
                     return;
