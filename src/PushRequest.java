@@ -1,10 +1,10 @@
 import java.io.IOException;
 
 public class PushRequest implements Runnable {
-    String command;
+    Command command;
     String port;
 
-    public PushRequest(String command, String port) {
+    public PushRequest(Command command, String port) {
         this.command = command;
         this.port = port;
     }
@@ -13,7 +13,7 @@ public class PushRequest implements Runnable {
     public void run() {
         try {
             Connection connection = new Connection("127.0.0.1", port);
-            connection.sendMessage(command);
+            connection.sendMessage(command.getContent());
             String response = connection.readMessage();
             System.out.println(response);
             connection.close();

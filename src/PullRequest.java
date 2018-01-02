@@ -1,10 +1,10 @@
 import java.io.IOException;
 
 public class PullRequest implements Runnable {
-    String command;
+    Command command;
     String port;
 
-    public PullRequest(String command, String port) {
+    public PullRequest(Command command, String port) {
         this.command = command;
         this.port = port;
     }
@@ -13,7 +13,7 @@ public class PullRequest implements Runnable {
     public void run() {
         try {
         Connection connection = new Connection("127.0.0.1", port);
-        connection.sendMessage(command);
+        connection.sendMessage(command.getContent());
         String response = connection.readMessage();
         System.out.println(response);
         connection.close();

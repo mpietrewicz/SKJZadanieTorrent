@@ -20,11 +20,10 @@ public class Server implements Runnable{
             try {
                 connectionSocket = serverSocket.accept();
                 Connection connection = new Connection(connectionSocket);
-                String requestedCommand = connection.readMessage();
-                System.out.println("Requested Command: " +requestedCommand);
-
-                connection.setCommand(requestedCommand);
-                switch (requestedCommand) {
+                Command requestedCommand = new Command(connection.readMessage());
+                System.out.println("Requested Command: " +requestedCommand.getContent());
+                connection.setCommand(requestedCommand.getContent());
+                switch (requestedCommand.getOperation()) {
                     case "PULL":
                         Thread pullResponseThread = new Thread(new PullResponse(connection, requestedCommand));
                         pullResponseThread.start();

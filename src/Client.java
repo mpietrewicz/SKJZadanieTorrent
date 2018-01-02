@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Client implements Runnable {
     int id;
@@ -14,13 +15,12 @@ public class Client implements Runnable {
         Connection connection;
         String port;
 
-        BufferedReader userCommand = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader userCommandLine = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             try {
-                String command = null;
-                command = userCommand.readLine();
+                Command command = new Command(userCommandLine.readLine());
 
-                switch (command) {
+                switch (command.getOperation()) {
                     case "GET":
                         System.out.println("Wymiana list udostępnianych plików między hostami " +
                                 "-  chcemy wiedzieć gdzie (na jakim hoście) jakie pliki się znajdują, wraz z ich sumami kontrolnymi MD5");
@@ -38,14 +38,14 @@ public class Client implements Runnable {
                     case "PULL":
                         System.out.println("ściągamy z wybranego hosta plik o zadanej nazwie ");
                         System.out.print("Podaj nazwe hosta z ktorego ma być pobrany plik: ");
-                        port = userCommand.readLine();
+                        port = userCommandLine.readLine();
                         Thread pullRequestThread = new Thread(new PullRequest(command, port));
                         pullRequestThread.start();
                         break;
                     case "PUSH":
                         System.out.println("wrzucamy na wybrany host pliku o zadanej nazwie");
                         System.out.print("Podaj nazwe hosta do ktorego ma być wysłany plik: ");
-                        port = userCommand.readLine();
+                        port = userCommandLine.readLine();
                         Thread pushRequestThread = new Thread(new PushRequest(command, port));
                         pushRequestThread.start();
                         break;

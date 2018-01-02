@@ -3,9 +3,9 @@ import java.util.concurrent.TimeUnit;
 
 public class PushResponse implements Runnable {
     Connection connection;
-    String command;
+    Command command;
 
-    public PushResponse(Connection connection, String command) {
+    public PushResponse(Connection connection, Command command) {
         this.connection = connection;
         this.command = command;
     }

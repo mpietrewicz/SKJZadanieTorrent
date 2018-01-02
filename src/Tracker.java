@@ -17,8 +17,8 @@ public class Tracker {
             InputStreamReader inputStream = new InputStreamReader(connectionSocket.getInputStream());
             BufferedReader inputStreamBufferedReader = new BufferedReader(inputStream);
 
-            String command = inputStreamBufferedReader.readLine();
-            switch (command) {
+            Command command = new Command(inputStreamBufferedReader.readLine());
+            switch (command.getOperation()) {
                 case "GET":
                     System.out.println("Wymiana list udostępnianych plików między hostami " +
                             "-  chcemy wiedzieć gdzie (na jakim hoście) jakie pliki się znajdują, wraz z ich sumami kontrolnymi MD5");
