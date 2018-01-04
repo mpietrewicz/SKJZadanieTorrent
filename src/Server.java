@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 public class Server implements Runnable{
     int port;
     ServerSocket serverSocket;
+    Operation operation = new Operation();
 
     public Server(int id) throws IOException {
         this.port = 10000+id;
@@ -24,10 +25,12 @@ public class Server implements Runnable{
                 System.out.println("Requested Command: " +requestedCommand.getContent());
                 switch (requestedCommand.getOperation()) {
                     case "PULL":
+                        operation.pull(new ServerOperationStrategy());
                         Thread pullResponseThread = new Thread(new PullResponse(connection, requestedCommand));
                         pullResponseThread.start();
                         break;
                     case "PUSH":
+                        operation.push(new ServerOperationStrategy());
                         Thread pushResponseThread = new Thread(new PushResponse(connection, requestedCommand));
                         pushResponseThread.start();
                         break;

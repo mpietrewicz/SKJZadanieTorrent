@@ -14,6 +14,8 @@ public class Client implements Runnable {
     public void run() {
         Connection connection;
         String port;
+        Operation operation = new Operation();
+        ClientOperationStrategy clientOperationStrategy = new ClientOperationStrategy();
 
         BufferedReader userCommandLine = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
@@ -25,6 +27,7 @@ public class Client implements Runnable {
                         System.out.println("Wymiana list udostępnianych plików między hostami " +
                                 "-  chcemy wiedzieć gdzie (na jakim hoście) jakie pliki się znajdują, wraz z ich sumami kontrolnymi MD5");
                         port = "10000";
+                        operation.get(new ClientOperationStrategy());
                         Thread setRequestThread = new Thread(new SetRequest(command, port));
                         setRequestThread.start();
                         break;
@@ -32,6 +35,7 @@ public class Client implements Runnable {
                         System.out.println("Wymiana list udostępnianych plików między hostami " +
                                 "-  chcemy udostepnic listę udostępnianych plików");
                         port = "10000";
+                        operation.set(new ClientOperationStrategy());
                         Thread getRequestThread = new Thread(new GetRequest(command, port));
                         getRequestThread.start();
                         break;
@@ -39,6 +43,7 @@ public class Client implements Runnable {
                         System.out.println("ściągamy z wybranego hosta plik o zadanej nazwie ");
                         System.out.print("Podaj nazwe hosta z ktorego ma być pobrany plik: ");
                         port = userCommandLine.readLine();
+                        operation.pull(new ClientOperationStrategy());
                         Thread pullRequestThread = new Thread(new PullRequest(command, port));
                         pullRequestThread.start();
                         break;
@@ -46,6 +51,7 @@ public class Client implements Runnable {
                         System.out.println("wrzucamy na wybrany host pliku o zadanej nazwie");
                         System.out.print("Podaj nazwe hosta do ktorego ma być wysłany plik: ");
                         port = userCommandLine.readLine();
+                        operation.push(new ClientOperationStrategy());
                         Thread pushRequestThread = new Thread(new PushRequest(command, port));
                         pushRequestThread.start();
                         break;
