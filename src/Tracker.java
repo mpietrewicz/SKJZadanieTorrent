@@ -21,16 +21,10 @@ public class Tracker {
             Command command = new Command(inputStreamBufferedReader.readLine());
             switch (command.getOperation()) {
                 case "GET":
-                    System.out.println("Wymiana list udostępnianych plików między hostami " +
-                            "-  chcemy wiedzieć gdzie (na jakim hoście) jakie pliki się znajdują, wraz z ich sumami kontrolnymi MD5");
-                    outputStream.writeBytes("FILES: []" +'\n'); // TODO Zwracać zapisaną listę plików
-                    operation.get(new TrackerOperationStrategy());
+                    operation.get(new TrackerOperationStrategy(outputStream));
                     break;
                 case "SET":
-                    System.out.println("Wymiana list udostępnianych plików między hostami " +
-                            "-  chcemy udostepnic listę udostępnianych plików");
-                    outputStream.writeBytes("FILE SAVED" +'\n'); // TODO Zapisywać listę plików
-                    operation.set(new TrackerOperationStrategy());
+                    operation.set(new TrackerOperationStrategy(outputStream));
                     break;
                 default:
                     System.out.println("UNRECOGNIZED COMMAND");

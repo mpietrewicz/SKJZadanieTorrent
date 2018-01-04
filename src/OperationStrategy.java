@@ -1,10 +1,12 @@
+import java.io.IOException;
+
 public interface OperationStrategy {
 
-    void get();
+    void get() throws IOException;
 
-    void set();
+    void set() throws IOException;
 
-    void push();
+    void push() throws InterruptedException, IOException;
 
-    void pull();
+    void pull() throws InterruptedException, IOException;
 }

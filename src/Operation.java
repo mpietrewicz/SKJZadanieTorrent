@@ -1,18 +1,20 @@
+import java.io.IOException;
+
 public class Operation {
 
-    public void get(OperationStrategy operationStrategy) {
+    public void get(OperationStrategy operationStrategy) throws IOException {
         operationStrategy.get();
     }
 
-    public void set(OperationStrategy operationStrategy) {
+    public void set(OperationStrategy operationStrategy) throws IOException {
         operationStrategy.set();
     }
 
-    public void push(OperationStrategy operationStrategy) {
+    public void push(OperationStrategy operationStrategy) throws IOException, InterruptedException {
         operationStrategy.push();
     }
 
-    public void pull(OperationStrategy operationStrategy) {
+    public void pull(OperationStrategy operationStrategy) throws IOException, InterruptedException {
         operationStrategy.pull();
     }
 }

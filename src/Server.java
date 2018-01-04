@@ -25,20 +25,18 @@ public class Server implements Runnable{
                 System.out.println("Requested Command: " +requestedCommand.getContent());
                 switch (requestedCommand.getOperation()) {
                     case "PULL":
-                        operation.pull(new ServerOperationStrategy());
-                        Thread pullResponseThread = new Thread(new PullResponse(connection, requestedCommand));
-                        pullResponseThread.start();
+                        operation.pull(new ServerOperationStrategy(connection));
                         break;
                     case "PUSH":
-                        operation.push(new ServerOperationStrategy());
-                        Thread pushResponseThread = new Thread(new PushResponse(connection, requestedCommand));
-                        pushResponseThread.start();
+                        operation.push(new ServerOperationStrategy(connection));
                         break;
                     default:
                         System.out.println("UNRECOGNIZED COMMAND");
                         break;
                 }
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
