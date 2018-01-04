@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class ClientOperationStrategy implements OperationStrategy {
     Command command;
@@ -34,10 +35,27 @@ public class ClientOperationStrategy implements OperationStrategy {
     }
 
     public void defaultOperation() throws IOException {
-        Connection connection = new Connection("127.0.0.1", port);
-        connection.sendMessage(command.getContent());
-        String response = connection.readMessage();
-        System.out.println(response);
-        connection.close();
+        DefaultOperationThread defaultOperationThread = new DefaultOperationThread();
+    }
+
+    class DefaultOperationThread {
+        private Thread thread;
+
+        public DefaultOperationThread() {
+            thread = new Thread() {
+                public void run() {
+                    try {
+                        Connection connection = new Connection("127.0.0.1", port);
+                        connection.sendMessage(command.getContent());
+                        String response = connection.readMessage();
+                        System.out.println(response);
+                        connection.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            thread.start();
+        }
     }
 }
