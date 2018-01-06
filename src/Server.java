@@ -30,8 +30,12 @@ public class Server implements Runnable{
                     case "PUSH":
                         operation.push(new ServerOperationStrategy(connection));
                         break;
+                    case "GET":
+                        operation.get(new ServerOperationStrategy(connection));
+                        break;
                     default:
                         System.out.println("UNRECOGNIZED COMMAND");
+                        System.out.println(requestedCommand.getContent());
                         break;
                 }
             } catch (IOException e) {

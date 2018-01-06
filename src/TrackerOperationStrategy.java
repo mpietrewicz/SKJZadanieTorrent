@@ -43,15 +43,16 @@ public class TrackerOperationStrategy implements OperationStrategy{
             thread = new Thread() {
                 public void run() {
                     System.out.println("TrackerOperationStrategy");
-                    System.out.println("Wymiana list udostępnianych plików między hostami " +
-                            "-  chcemy udostepnic listę udostępnianych plików");
+                    System.out.println("Pobieram liste plikow od wszystkich hostow: ");
                     try {
-                        TimeUnit.SECONDS.sleep(5);
-                        connection.sendMessage("FILE SAVED"); // TODO Zapisywać listę plików
+                        Connection connectionToHost = new Connection("127.0.0.1", 10001);
+                        connectionToHost.sendMessage("GET");
+                        String response = connectionToHost.readMessage();
+                        System.out.println(response);
+                        connection.sendMessage(response);
+                        connectionToHost.close();
                         connection.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }

@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -9,8 +10,22 @@ public class ServerOperationStrategy implements OperationStrategy{
     }
 
     @Override
-    public void get() {
+    public void get() throws IOException {
         System.out.println("Operation is now supported!");
+        System.out.println("Udostepniam liste plikow");
+        final File folder = new File("/1");
+        System.out.println(getFileList());
+        connection.sendMessage(getFileList());
+    }
+
+    private String getFileList() {
+        File folder = new File("1");
+        StringBuilder listOfFiles = new StringBuilder();
+        for (File file : folder.listFiles()) {
+            listOfFiles.append(file.getName());
+            listOfFiles.append(" ");
+        }
+        return String.valueOf(listOfFiles);
     }
 
     @Override
