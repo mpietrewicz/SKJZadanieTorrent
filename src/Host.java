@@ -12,6 +12,9 @@ public class Host {
             return;
         }
 
+        Connection connection = new Connection("127.0.0.1", 10000);
+        connection.sendMessage("REGISTER "+id);
+
         Server server = new Server(id);
         Thread serverThread = new Thread(server);
         serverThread.start();

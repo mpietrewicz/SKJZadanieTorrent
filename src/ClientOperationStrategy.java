@@ -17,7 +17,7 @@ public class ClientOperationStrategy implements OperationStrategy {
     }
 
     @Override
-    public void set() throws IOException {
+    public void register() throws IOException {
         System.out.println("ClientOperationStrategy");
         defaultOperation();
     }

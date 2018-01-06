@@ -4,7 +4,7 @@ public interface OperationStrategy {
 
     void get() throws IOException;
 
-    void set() throws IOException;
+    void register() throws IOException;
 
     void push() throws InterruptedException, IOException;
 

@@ -14,21 +14,21 @@ public class Tracker {
 
         while (true) {
             Socket connectionSocket = serverSocket.accept();
-            outputStream = new DataOutputStream(connectionSocket.getOutputStream());
-            InputStreamReader inputStream = new InputStreamReader(connectionSocket.getInputStream());
-            BufferedReader inputStreamBufferedReader = new BufferedReader(inputStream);
-
-            Command command = new Command(inputStreamBufferedReader.readLine());
-            switch (command.getOperation()) {
+            Connection connection = new Connection(connectionSocket);
+            Command requestedCommand = new Command(connection.readMessage());
+            System.out.println("Requested Command: " +requestedCommand.getContent());
+            switch (requestedCommand.getOperation()) {
                 case "GET":
-                    operation.get(new TrackerOperationStrategy(outputStream));
+                    operation.get(new TrackerOperationStrategy(connection));
                     break;
-                case "SET":
-                    operation.set(new TrackerOperationStrategy(outputStream));
+                case "REGISTER":
+                    // TODO: Dodać walidację komenty REGISTER
+                    operation.register(new TrackerOperationStrategy(requestedCommand, connection));
                     break;
                 default:
                     System.out.println("UNRECOGNIZED COMMAND");
-                    outputStream.writeBytes("UNRECOGNIZED COMMAND" +'\n');
+                    connection.sendMessage("UNRECOGNIZED COMMAND");
+                    connection.close();
                     break;
             }
         }

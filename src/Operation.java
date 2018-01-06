@@ -6,8 +6,8 @@ public class Operation {
         operationStrategy.get();
     }
 
-    public void set(OperationStrategy operationStrategy) throws IOException {
-        operationStrategy.set();
+    public void register(OperationStrategy operationStrategy) throws IOException {
+        operationStrategy.register();
     }
 
     public void push(OperationStrategy operationStrategy) throws IOException, InterruptedException {

@@ -14,7 +14,7 @@ public class ServerOperationStrategy implements OperationStrategy{
     }
 
     @Override
-    public void set() {
+    public void register() {
         System.out.println("Operation is now supported!");
     }
 

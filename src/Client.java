@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class Client implements Runnable {
     int id;
@@ -27,12 +26,6 @@ public class Client implements Runnable {
                                 "-  chcemy wiedzieć gdzie (na jakim hoście) jakie pliki się znajdują, wraz z ich sumami kontrolnymi MD5");
                         port = "10000";
                         operation.get(new ClientOperationStrategy(command, port));
-                        break;
-                    case "SET":
-                        System.out.println("Wymiana list udostępnianych plików między hostami " +
-                                "-  chcemy udostepnic listę udostępnianych plików");
-                        port = "10000";
-                        operation.set(new ClientOperationStrategy(command, port));
                         break;
                     case "PULL":
                         System.out.println("ściągamy z wybranego hosta plik o zadanej nazwie ");

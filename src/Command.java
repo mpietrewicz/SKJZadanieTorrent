@@ -25,4 +25,8 @@ public class Command {
         return operation;
     }
 
+    public List<String> getArgs() {
+        return args;
+    }
+
 }
