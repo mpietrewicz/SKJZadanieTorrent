@@ -1,36 +1,40 @@
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+package App.Operation;
 
-public class ClientOperationStrategy implements OperationStrategy {
+import App.Comunication.Command;
+import App.Comunication.Connection;
+
+import java.io.IOException;
+
+public class ClientOperation implements OperationStrategy {
     Command command;
     String port;
 
-    public ClientOperationStrategy(Command command, String port) {
+    public ClientOperation(Command command, String port) {
         this.command = command;
         this.port = port;
     }
 
     @Override
     public void get() throws IOException {
-        System.out.println("ClientOperationStrategy");
+        System.out.println("App.Operation.ClientOperation");
         defaultOperation();
     }
 
     @Override
     public void register() throws IOException {
-        System.out.println("ClientOperationStrategy");
+        System.out.println("App.Operation.ClientOperation");
         defaultOperation();
     }
 
     @Override
     public void push() throws IOException {
-        System.out.println("ClientOperationStrategy");
+        System.out.println("App.Operation.ClientOperation");
         defaultOperation();
     }
 
     @Override
     public void pull() throws IOException {
-        System.out.println("ClientOperationStrategy");
+        System.out.println("App.Operation.ClientOperation");
         defaultOperation();
     }
 

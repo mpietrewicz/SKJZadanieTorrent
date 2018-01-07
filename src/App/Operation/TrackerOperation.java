@@ -1,17 +1,21 @@
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+package App.Operation;
 
-public class TrackerOperationStrategy implements OperationStrategy{
+import App.Comunication.Command;
+import App.Comunication.Connection;
+import App.Repository.UserRegister;
+
+import java.io.IOException;
+
+public class TrackerOperation implements OperationStrategy{
     Connection connection;
     Command command;
     UserRegister userRegister = UserRegister.INSTANCE;
 
-    public TrackerOperationStrategy(Connection connection) {
+    public TrackerOperation(Connection connection) {
         this.connection = connection;
     }
 
-    public TrackerOperationStrategy(Command command, Connection connection) {
+    public TrackerOperation(Command command, Connection connection) {
         this.command = command;
         this.connection = connection;
     }
@@ -28,12 +32,12 @@ public class TrackerOperationStrategy implements OperationStrategy{
 
     @Override
     public void push() {
-        System.out.println("Operation is now supported!");
+        System.out.println("App.Operation.Operation is now supported!");
     }
 
     @Override
     public void pull() {
-        System.out.println("Operation is now supported!");
+        System.out.println("App.Operation.Operation is now supported!");
     }
 
     class GetOperationThread {
@@ -42,7 +46,7 @@ public class TrackerOperationStrategy implements OperationStrategy{
         public GetOperationThread() {
             thread = new Thread() {
                 public void run() {
-                    System.out.println("TrackerOperationStrategy");
+                    System.out.println("App.Operation.TrackerOperation");
                     System.out.println("Pobieram liste plikow od wszystkich hostow: ");
                     try {
                         StringBuilder allFiles = new StringBuilder();
@@ -73,7 +77,7 @@ public class TrackerOperationStrategy implements OperationStrategy{
         public RegisterOperationThread() {
             thread = new Thread() {
                 public void run() {
-                System.out.println("TrackerOperationStrategy");
+                System.out.println("App.Operation.TrackerOperation");
                 System.out.println("Rejestracja uzytkownika");
                 userRegister.addUser(command.getArgs().get(0));
                 System.out.println("Zarejestrowano Użytkownika o id: " +command.getArgs().get(0));

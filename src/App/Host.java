@@ -1,3 +1,7 @@
+package App;
+
+import App.Comunication.Connection;
+
 import java.io.IOException;
 
 public class Host {
@@ -8,7 +12,7 @@ public class Host {
             System.out.println("Starting host: "+id);
         }
         else {
-            System.out.println("Client id must be in range: 1-99");
+            System.out.println("App.Client id must be in range: 1-99");
             return;
         }
 

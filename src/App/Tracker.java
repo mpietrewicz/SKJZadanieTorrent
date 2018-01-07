@@ -1,7 +1,12 @@
-import java.io.BufferedReader;
+package App;
+
+import App.Comunication.Command;
+import App.Comunication.Connection;
+import App.Operation.Operation;
+import App.Operation.TrackerOperation;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,14 +21,14 @@ public class Tracker {
             Socket connectionSocket = serverSocket.accept();
             Connection connection = new Connection(connectionSocket);
             Command requestedCommand = new Command(connection.readMessage());
-            System.out.println("Requested Command: " +requestedCommand.getContent());
+            System.out.println("Requested App.Comunication.Command: " +requestedCommand.getContent());
             switch (requestedCommand.getOperation()) {
                 case "GET":
-                    operation.get(new TrackerOperationStrategy(connection));
+                    operation.get(new TrackerOperation(connection));
                     break;
                 case "REGISTER":
                     // TODO: Dodać walidację komenty REGISTER
-                    operation.register(new TrackerOperationStrategy(requestedCommand, connection));
+                    operation.register(new TrackerOperation(requestedCommand, connection));
                     break;
                 default:
                     System.out.println("UNRECOGNIZED COMMAND");

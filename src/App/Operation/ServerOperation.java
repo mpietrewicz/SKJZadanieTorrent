@@ -1,23 +1,27 @@
+package App.Operation;
+
+import App.Comunication.Connection;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-public class ServerOperationStrategy implements OperationStrategy{
+public class ServerOperation implements OperationStrategy{
     int hostId;
     Connection connection;
 
-    public ServerOperationStrategy(Connection connection) {
+    public ServerOperation(Connection connection) {
         this.connection = connection;
     }
 
-    public ServerOperationStrategy(int id, Connection connection) {
+    public ServerOperation(int id, Connection connection) {
         this.hostId = id;
         this.connection = connection;
     }
 
     @Override
     public void get() throws IOException {
-        System.out.println("Operation is now supported!");
+        System.out.println("App.Operation.Operation is now supported!");
         System.out.println("Udostepniam liste plikow");
         System.out.println(getFileList());
         connection.sendMessage(getFileList());
@@ -40,7 +44,7 @@ public class ServerOperationStrategy implements OperationStrategy{
 
     @Override
     public void register() {
-        System.out.println("Operation is now supported!");
+        System.out.println("App.Operation.Operation is now supported!");
     }
 
     @Override
@@ -60,7 +64,7 @@ public class ServerOperationStrategy implements OperationStrategy{
             thread = new Thread() {
                 public void run() {
                     try {
-                        System.out.println("ServerOperationStrategy");
+                        System.out.println("App.Operation.ServerOperation");
                         System.out.println("Mam udsotepnic plik o podanej nazwie");
                         TimeUnit.SECONDS.sleep(5);
                         connection.sendMessage("Udostepnilem plik!");
@@ -83,7 +87,7 @@ public class ServerOperationStrategy implements OperationStrategy{
             thread = new Thread() {
                 public void run() {
                     try {
-                        System.out.println("ServerOperationStrategy");
+                        System.out.println("App.Operation.ServerOperation");
                         System.out.println("Otrzymam plik o podanej nazwie");
                         TimeUnit.SECONDS.sleep(5);
                         connection.sendMessage("Odebralem plik!");

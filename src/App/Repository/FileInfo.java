@@ -1,3 +1,5 @@
+package App.Repository;
+
 public class FileInfo {
     String name;
     String checksum;
