@@ -4,11 +4,13 @@ import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
 public class Server implements Runnable{
+    int id;
     int port;
     ServerSocket serverSocket;
     Operation operation = new Operation();
 
     public Server(int id) throws IOException {
+        this.id = id;
         this.port = 10000+id;
         this.serverSocket = new ServerSocket(this.port);
     }
@@ -31,7 +33,7 @@ public class Server implements Runnable{
                         operation.push(new ServerOperationStrategy(connection));
                         break;
                     case "GET":
-                        operation.get(new ServerOperationStrategy(connection));
+                        operation.get(new ServerOperationStrategy(id, connection));
                         break;
                     default:
                         System.out.println("UNRECOGNIZED COMMAND");

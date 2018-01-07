@@ -45,12 +45,18 @@ public class TrackerOperationStrategy implements OperationStrategy{
                     System.out.println("TrackerOperationStrategy");
                     System.out.println("Pobieram liste plikow od wszystkich hostow: ");
                     try {
-                        Connection connectionToHost = new Connection("127.0.0.1", 10001);
-                        connectionToHost.sendMessage("GET");
-                        String response = connectionToHost.readMessage();
-                        System.out.println(response);
-                        connection.sendMessage(response);
-                        connectionToHost.close();
+                        StringBuilder allFiles = new StringBuilder();
+                        allFiles.append("");
+                        for (String userId : userRegister.getUsers()) {
+                            Connection connectionToHost = new Connection("127.0.0.1", 10000+Integer.parseInt(userId));
+                            connectionToHost.sendMessage("GET");
+                            String response = connectionToHost.readMessage();
+                            System.out.println(response);
+                            allFiles.append(response);
+                            allFiles.append(" ");
+                            connectionToHost.close();
+                       }
+                        connection.sendMessage(String.valueOf(allFiles));
                         connection.close();
                     } catch (IOException e) {
                         e.printStackTrace();

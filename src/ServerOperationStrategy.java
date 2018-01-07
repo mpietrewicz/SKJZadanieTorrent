@@ -3,9 +3,15 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class ServerOperationStrategy implements OperationStrategy{
+    int hostId;
     Connection connection;
 
     public ServerOperationStrategy(Connection connection) {
+        this.connection = connection;
+    }
+
+    public ServerOperationStrategy(int id, Connection connection) {
+        this.hostId = id;
         this.connection = connection;
     }
 
@@ -13,19 +19,23 @@ public class ServerOperationStrategy implements OperationStrategy{
     public void get() throws IOException {
         System.out.println("Operation is now supported!");
         System.out.println("Udostepniam liste plikow");
-        final File folder = new File("/1");
         System.out.println(getFileList());
         connection.sendMessage(getFileList());
     }
 
     private String getFileList() {
-        File folder = new File("1");
+        File folder = new File("C:/TORrent_"+String.valueOf(hostId));
         StringBuilder listOfFiles = new StringBuilder();
-        for (File file : folder.listFiles()) {
-            listOfFiles.append(file.getName());
-            listOfFiles.append(" ");
+        listOfFiles.append("");
+        if(folder.listFiles() != null) {
+            for (File file : folder.listFiles()) {
+                listOfFiles.append(file.getName());
+                listOfFiles.append(" ");
+            }
+            return String.valueOf(listOfFiles);
+        } else {
+            return "";
         }
-        return String.valueOf(listOfFiles);
     }
 
     @Override
